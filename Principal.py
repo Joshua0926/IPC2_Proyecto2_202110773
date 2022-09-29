@@ -2,6 +2,9 @@ from xml.dom import minidom
 from xml.etree.cElementTree import parse, Element
 import xml.etree.ElementTree as ET
 from tkinter import filedialog as fd
+from lista_empresa import listaempresa
+listaempresa = listaempresa()
+
 
 
 cont =0
@@ -12,8 +15,6 @@ root = docxml.getroot()
 
 listaIDCliente=[]
 listaempresas =[]
-listapuntos =[]
-listaescritorios=[]
 listatransacciones=[]
 
 
@@ -25,45 +26,48 @@ for x in root.findall('empresa'):
 
 
 
-for i in listaIDCliente:
-    for x in root.findall('.//empresa[@id="'+i+'"]'):
-        print("ID Empresa: "+ x.attrib.get('id'))
-        print("Nombre Empresa: "+ x.find('nombre').text)
-        print("Abreviatura Empresa: "+ x.find('abreviatura').text)
-        listaempresas.append([x.attrib.get('id'),x.find('nombre').text,x.find('abreviatura').text])
+for x in root.findall('empresa'):
+    IdEmpresa=x.attrib.get('id')
+    NombreEmpresa=x.find('nombre').text
+    AbrevEmpresa=x.find('abreviatura').text
+    listaempresas.append([IdEmpresa,NombreEmpresa,AbrevEmpresa])
 
-        PuntosAtencion = x.find('listaPuntosAtencion')
+    PuntosAtencion = x.find('listaPuntosAtencion')
+    listapuntos =[]
+    listaescritorios=[]
 
-        for y in PuntosAtencion.findall('puntoAtencion'):
-            print('ID Punto de Atencion: '+y.attrib.get('id')) 
-            print('NOMBRE Punto de Atencion: '+y.find('nombre').text) 
-            print('Direccion Punto de Atencion: '+y.find('direccion').text)
-            listapuntos.append([y.attrib.get('id'),y.find('nombre').text,y.find('direccion').text])
+    for y in PuntosAtencion.findall('puntoAtencion'):
+        IdPuntos=y.attrib.get('id')
+        NombrePunto=y.find('nombre').text 
+        DireccionPunto=y.find('direccion').text
+        listapuntos.append([IdPuntos,NombrePunto,DireccionPunto])
 
-            escritorios = y.find('listaEscritorios')
+        escritorios = y.find('listaEscritorios')
 
-            for z in escritorios.findall('escritorio'):
-                print('ID Escritorio: '+z.attrib.get('id')) 
-                print('Identificacion Escritorio: '+z.find('identificacion').text) 
-                print('Encargado Escritorio: '+z.find('encargado').text)
-                listaescritorios.append([z.attrib.get('id'),z.find('identificacion').text,z.find('encargado').text])
+        for z in escritorios.findall('escritorio'):
+            IdEscritorio=z.attrib.get('id') 
+            IdentificacionEscritorio=z.find('identificacion').text 
+            EncargadoEscritorio=z.find('encargado').text
+            listaescritorios.append([IdPuntos,IdEscritorio,IdentificacionEscritorio,EncargadoEscritorio])
 
 
 
-        transacciones = x.find('listaTransacciones')
+        # transacciones = x.find('listaTransacciones')
 
-        for a in transacciones.findall('transaccion'):
-            print('ID Transaccion: '+a.attrib.get('id')) 
-            print('Nombre Transaccion: '+a.find('nombre').text) 
-            print('Tiempo Atencion: '+a.find('tiempoAtencion').text)
-            listatransacciones.append([a.attrib.get('id'),a.find('nombre').text,a.find('tiempoAtencion').text])
-            print("-----------------------------------------")
+        # for a in transacciones.findall('transaccion'):
+        #     print('ID Transaccion: '+a.attrib.get('id')) 
+        #     print('Nombre Transaccion: '+a.find('nombre').text) 
+        #     print('Tiempo Atencion: '+a.find('tiempoAtencion').text)
+        #     listatransacciones.append([a.attrib.get('id'),a.find('nombre').text,a.find('tiempoAtencion').text])
+        #     print("-----------------------------------------")
 
-print("***********************************")
-print(listaempresas)
-print(listapuntos)
-print(listaescritorios)
-print(listatransacciones)
+    listaempresa.insertar_empresa(IdEmpresa,NombreEmpresa,AbrevEmpresa,listapuntos,listaescritorios)
+listaempresa.mostrar_empresa()
+# print("***********************************")
+# print(listaempresas)
+# print(listapuntos)
+# print(listaescritorios)
+# print(listatransacciones)
 
 
 
