@@ -29,7 +29,12 @@ def run():
         #         startTest(empresa, pto_atencion)
         #     else:
         #         print("Datos incorrectos")
-                
+        elif selection == 2:
+            listaempresa.SeleccionarEmpresa(config_idE, config_idP)  
+
+        elif selection == 3:
+            ManejoPuntosA(lista_empresas, configuracion_inicial)
+
         elif selection == 4:
             print("Finalizando programa...")
             end = True
