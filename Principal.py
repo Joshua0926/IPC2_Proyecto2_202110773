@@ -8,7 +8,6 @@ def run():
     end = False
     selection = 0
 
-    # VARIABLES
     empresa = None
     pto_atencion = None
 
@@ -20,17 +19,8 @@ def run():
         if selection == 1:
             systemConfiguration(lista_empresas, configuracion_inicial)
 
-        # elif selection == 2:
-        #     empresa = selectBussines(lista_empresas)
-        #     pto_atencion = selectPoint(empresa)
-
-        # elif selection == 3:
-        #     if empresa !=None and pto_atencion != None:
-        #         startTest(empresa, pto_atencion)
-        #     else:
-        #         print("Datos incorrectos")
         elif selection == 2:
-            listaempresa.SeleccionarEmpresa(config_idE, config_idP)  
+            listadopuntosa() 
 
         elif selection == 3:
             ManejoPuntosA(lista_empresas, configuracion_inicial)

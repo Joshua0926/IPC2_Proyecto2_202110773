@@ -1,6 +1,8 @@
+from turtle import color
 from nodo import Nodo
 import numpy as np 
 import xml.etree.cElementTree as ET 
+import graphviz
 
 
 class listatrans(): 
@@ -38,8 +40,7 @@ class listatrans():
                 print("Escritorios activos: ", tmp.dato[3][cont_trans][0]) 
                 cont_trans+=1 
             cont_cliente=0
-            # print("prueba******")            
-            # print(tmp.dato[0]) 
+            
             for j in tmp.dato[4]:   
                 print("--CLIENTE--") 
                 print("DPI: ", tmp.dato[4][cont_cliente][0]) 
@@ -73,3 +74,22 @@ class listatrans():
             self.ultimo= None 
             self.size=0 
             print(self.size)
+
+    def dibujarGraficaClientes(self):
+        tmp = self.primero
+        f = graphviz.Digraph(filename = "output/colorful organogram 1.gv")
+        contesc=0
+        for i in tmp.dato[4]:
+            f.node("Clientes: "+ tmp.dato[4][contesc][0]+"  "+ tmp.dato[4][contesc][1], shape="box", color="green")
+            contid=0 
+            for l in tmp.dato[5]: 
+                if tmp.dato[5][contid][0]!=tmp.dato[4][contesc][0]:
+                    contid+=1
+                else:
+                    while tmp.dato[5][contid][0]==tmp.dato[4][contesc][0]:
+                        f.node("Transacciones: "+ tmp.dato[5][contid][1]+"  "+ tmp.dato[5][contid][2], shape="box", color="white")    
+                        contid+=1 
+                        break
+            contesc+=1
+        f.render(filename='Clientes', format="png", view=0, cleanup=1)    
+        f
